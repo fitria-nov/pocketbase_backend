@@ -1,16 +1,21 @@
+# Dockerfile
+
+# Gunakan base image yang ringan
 FROM alpine:latest
 
-# Instal dependencies
-RUN apk add --no-cache bash
+# Set direktori kerja di dalam container
+WORKDIR /pb
 
-# Buat direktori kerja
-WORKDIR /app
+# Salin file binary pocketbase dan folder migrasi ke dalam container
+COPY ./pocketbase /pb/pocketbase
+COPY ./pb_migrations /pb/pb_migrations
 
-# Copy semua file ke dalam container
-COPY . .
+# Berikan izin eksekusi pada file binary pocketbase
+RUN chmod +x /pb/pocketbase
 
-# Set permission start.sh
-RUN chmod +x start.sh
+# Port yang akan digunakan oleh PocketBase di dalam container
+EXPOSE 8090
 
-# Jalankan PocketBase
-CMD ["./start.sh"]
+# Perintah untuk menjalankan server saat container dimulai
+# Railway akan secara otomatis memetakan port publiknya ke port 8090 ini.
+CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8090"]
