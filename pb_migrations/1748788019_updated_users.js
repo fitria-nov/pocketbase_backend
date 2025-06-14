@@ -1,50 +1,48 @@
 /// <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
-  const collection = $app.findCollectionByNameOrId("_pb_users_auth_")
+  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
   
   // add phone field
-  collection.schema.addField(new SchemaField({
+  collection.fields.addAt(7, new Field({
+    "autogeneratePattern": "",
+    "hidden": false,
     "id": "text1146066909",
+    "max": 0,
+    "min": 0,
     "name": "phone",
-    "type": "text",
-    "system": false,
-    "required": false,
+    "pattern": "",
     "presentable": false,
-    "unique": false,
-    "options": {
-      "min": null,
-      "max": null,
-      "pattern": ""
-    }
+    "primaryKey": false,
+    "required": false,
+    "system": false,
+    "type": "text"
   }))
-
+  
   // add user_type field
-  collection.schema.addField(new SchemaField({
+  collection.fields.addAt(9, new Field({
+    "hidden": false,
     "id": "select4133428192",
+    "maxSelect": 2,
     "name": "user_type",
-    "type": "select",
-    "system": false,
-    "required": false,
     "presentable": false,
-    "unique": false,
-    "options": {
-      "maxSelect": 2,
-      "values": [
-        "customers",
-        "artist"
-      ]
-    }
+    "required": false,
+    "system": false,
+    "type": "select",
+    "values": [
+      "customers",
+      "artist"
+    ]
   }))
 
-  return $app.save(collection)
+  return app.save(collection)
 }, (app) => {
-  const collection = $app.findCollectionByNameOrId("_pb_users_auth_")
+  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
   
   // remove user_type field
-  collection.schema.removeField("select4133428192")
+  collection.fields.removeById("select4133428192")
   
-  // remove phone field
-  collection.schema.removeField("text1146066909")
+  // remove phone field  
+  collection.fields.removeById("text1146066909")
 
-  return $app.save(collection)
+  return app.save(collection)
 })
