@@ -1,74 +1,50 @@
 /// <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
-
-  // update field
-  collection.fields.addAt(7, new Field({
-    "autogeneratePattern": "",
-    "hidden": false,
+  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  
+  // add phone field
+  collection.schema.addField(new SchemaField({
     "id": "text1146066909",
-    "max": 0,
-    "min": 0,
     "name": "phone",
-    "pattern": "",
-    "presentable": false,
-    "primaryKey": false,
-    "required": false,
+    "type": "text",
     "system": false,
-    "type": "text"
+    "required": false,
+    "presentable": false,
+    "unique": false,
+    "options": {
+      "min": null,
+      "max": null,
+      "pattern": ""
+    }
   }))
 
-  // update field
-  collection.fields.addAt(9, new Field({
-    "hidden": false,
+  // add user_type field
+  collection.schema.addField(new SchemaField({
     "id": "select4133428192",
-    "maxSelect": 2,
     "name": "user_type",
-    "presentable": false,
-    "required": false,
-    "system": false,
     "type": "select",
-    "values": [
-      "customers",
-      "artist"
-    ]
+    "system": false,
+    "required": false,
+    "presentable": false,
+    "unique": false,
+    "options": {
+      "maxSelect": 2,
+      "values": [
+        "customers",
+        "artist"
+      ]
+    }
   }))
 
-  return app.save(collection)
+  return app.dao().saveCollection(collection)
 }, (app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
+  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  
+  // remove user_type field
+  collection.schema.removeField("select4133428192")
+  
+  // remove phone field
+  collection.schema.removeField("text1146066909")
 
-  // update field
-  collection.fields.addAt(7, new Field({
-    "autogeneratePattern": "",
-    "hidden": false,
-    "id": "text1146066909",
-    "max": 0,
-    "min": 0,
-    "name": "phone",
-    "pattern": "",
-    "presentable": false,
-    "primaryKey": false,
-    "required": true,
-    "system": false,
-    "type": "text"
-  }))
-
-  // update field
-  collection.fields.addAt(9, new Field({
-    "hidden": false,
-    "id": "select4133428192",
-    "maxSelect": 2,
-    "name": "user_type",
-    "presentable": false,
-    "required": true,
-    "system": false,
-    "type": "select",
-    "values": [
-      "customers",
-      "artist"
-    ]
-  }))
-
-  return app.save(collection)
+  return app.dao().saveCollection(collection)
 })
