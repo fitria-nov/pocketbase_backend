@@ -1,7 +1,7 @@
 /// <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
-
+  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  
   // update field
   collection.fields.addAt(9, new Field({
     "hidden": false,
@@ -17,12 +17,12 @@ migrate((app) => {
       "barista/artist"
     ]
   }))
-
-  return app.save(collection)
+  
+  return app.dao().save(collection)
 }, (app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
-
-  // update field
+  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  
+  // update field - rollback
   collection.fields.addAt(9, new Field({
     "hidden": false,
     "id": "select4133428192",
@@ -37,6 +37,6 @@ migrate((app) => {
       "artist"
     ]
   }))
-
-  return app.save(collection)
+  
+  return app.dao().save(collection)
 })
