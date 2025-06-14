@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["bash"]
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "./start.sh"

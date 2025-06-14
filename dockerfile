@@ -1,14 +1,16 @@
 FROM alpine:latest
 
+# Instal dependencies
+RUN apk add --no-cache bash
+
+# Buat direktori kerja
 WORKDIR /app
 
-# Copy binary PocketBase
-COPY pocketbase /app/pocketbase
-COPY start.sh /app/start.sh
-COPY pb_migrations /app/pb_migrations
+# Copy semua file ke dalam container
+COPY . .
 
-RUN chmod +x /app/pocketbase && chmod +x /app/start.sh
+# Set permission start.sh
+RUN chmod +x start.sh
 
-EXPOSE 8080
-
-CMD ["/app/start.sh"]
+# Jalankan PocketBase
+CMD ["./start.sh"]
