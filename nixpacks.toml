@@ -1,5 +1,5 @@
-[phases.setup]
-nixPkgs = ["bash", "curl"]  # tambah curl, jika di skrip butuh download (optional)
+[phases.build]
+cmds = ["chmod +x pocketbase"]
 
 [start]
-cmd = "./start.sh"
+cmd = "./pocketbase serve --http=0.0.0.0:$PORT"

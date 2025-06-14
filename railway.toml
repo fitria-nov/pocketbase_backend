@@ -1,2 +1,5 @@
+[build]
+builder = "nixpacks"
+
 [deploy]
-startCommand = "./pocketbase serve --http=0.0.0.0:{{.PORT}}"
+startCommand = "./pocketbase serve --http=0.0.0.0:$PORT"
