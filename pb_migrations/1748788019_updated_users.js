@@ -1,6 +1,6 @@
 /// <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
-  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  const collection = $app.findCollectionByNameOrId("_pb_users_auth_")
   
   // add phone field
   collection.schema.addField(new SchemaField({
@@ -36,9 +36,9 @@ migrate((app) => {
     }
   }))
 
-  return app.dao().saveCollection(collection)
+  return $app.save(collection)
 }, (app) => {
-  const collection = app.dao().findCollectionByNameOrId("_pb_users_auth_")
+  const collection = $app.findCollectionByNameOrId("_pb_users_auth_")
   
   // remove user_type field
   collection.schema.removeField("select4133428192")
@@ -46,5 +46,5 @@ migrate((app) => {
   // remove phone field
   collection.schema.removeField("text1146066909")
 
-  return app.dao().saveCollection(collection)
+  return $app.save(collection)
 })
