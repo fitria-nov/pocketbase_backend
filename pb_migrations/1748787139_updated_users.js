@@ -1,29 +1,31 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
+migrate((db) => {
+  const dao = new Dao(db)
+  const collection = dao.findCollectionByNameOrId("_pb_users_auth_")
 
   // add field
-  collection.fields.addAt(13, new Field({
-    "autogeneratePattern": "",
-    "hidden": false,
+  collection.schema.addField(new SchemaField({
     "id": "text1294150441",
-    "max": 0,
-    "min": 0,
     "name": "registeredAt",
-    "pattern": "",
-    "presentable": false,
-    "primaryKey": false,
-    "required": false,
+    "type": "text",
     "system": false,
-    "type": "text"
+    "required": false,
+    "presentable": false,
+    "unique": false,
+    "options": {
+      "min": 0,
+      "max": 0,
+      "pattern": ""
+    }
   }))
 
-  return app.save(collection)
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("_pb_users_auth_")
+  return dao.saveCollection(collection)
+}, (db) => {
+  const dao = new Dao(db)
+  const collection = dao.findCollectionByNameOrId("_pb_users_auth_")
 
   // remove field
-  collection.fields.removeById("text1294150441")
+  collection.schema.removeField("text1294150441")
 
-  return app.save(collection)
+  return dao.saveCollection(collection)
 })
